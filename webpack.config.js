@@ -1,11 +1,12 @@
+var webpack = require('webpack');
+
 module.exports = {
 	resolve: {
 		extensions: ['', '.js', '.jsx']
 	},
 	entry: {
 		'js/main.js': [
-			'./src/index',
-			'webpack/hot/only-dev-server'
+			'./src/index'
 		]
 	},
 	output: {
@@ -26,5 +27,6 @@ module.exports = {
 	devServer: {
 		contentBase: './static',
 		inline: true
-	}
+	},
+	plugins: []
 };
