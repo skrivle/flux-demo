@@ -1,32 +1,52 @@
-import React from 'react';
-import * as movieService from '../services/movieService';
+import React from 'react';;
+import * as movieActions from '../actions/movieActions';
+import MovieSearchStore from '../stores/MovieSearchStore';
 
+
+function getAppState () {
+	return {
+		movies: MovieSearchStore.getMovies()
+	}
+}
 
 class App extends React.Component {
 
 	constructor () {
 		super();
+		this.state = getAppState();
 
-		this.state = {
-			loaded: false
-		};
+		this._onChange = this._onChange.bind(this);
 	}
 
 	componentDidMount () {
-		movieService.search().then(() => {
-			this.setState({loaded: true});
-		});
+		MovieSearchStore.on('change', this._onChange)
+		movieActions.search('lol');
+	}
+
+	_onChange () {
+		this.setState(getAppState());
 	}
 
 	render () {
 
-		let text = 'loading ....';
+		let view;
+		let movies = [];
 
-		if(this.state.loaded) {
-			text = 'finished loading!'
+		if(!this.state.movies.length) {
+			view = (<div>No movies ...</div>);
+		}else {
+
+			for(let i = 0, iLen = this.state.movies.length; i < iLen; i ++) {
+				let movie = this.state.movies[i];
+				movies.push(<div key={i}>{movie.title}</div>);
+			}
+
+			view = (<div>{movies}</div>);
 		}
 
-		return (<div>My App {text}</div>);
+		console.log(view)
+
+		return view;
 	}
 }
 
