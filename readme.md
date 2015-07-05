@@ -1,6 +1,6 @@
 #Flux demo
 
-Flux demo app written in ES6 using webpack. Work in progress ...
+Flux demo app written in ES6 using webpack + babel. Work in progress ...
 
 ## running the app
 ```

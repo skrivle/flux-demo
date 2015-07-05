@@ -1,12 +1,18 @@
 import React from 'react';;
-import * as movieActions from '../actions/movieActions';
 import MovieSearchStore from '../stores/MovieSearchStore';
+import SearchField from './Search';
+import MovieList from './MovieList';
+import * as movieActions from '../actions/movieActions';
 
 
 function getAppState () {
 	return {
-		movies: MovieSearchStore.getMovies()
+		movies: MovieSearchStore.getMovies(),
+		isLoading: MovieSearchStore.getIsLoading(),
+		searchQuery: MovieSearchStore.getSearchQuery()
 	}
+
+	console.log(this.state);
 }
 
 class App extends React.Component {
@@ -16,37 +22,28 @@ class App extends React.Component {
 		this.state = getAppState();
 
 		this._onChange = this._onChange.bind(this);
+		this._onSearch = this._onSearch.bind(this);
 	}
 
 	componentDidMount () {
-		MovieSearchStore.on('change', this._onChange)
-		movieActions.search('lol');
+		MovieSearchStore.on('change', this._onChange);
 	}
 
 	_onChange () {
 		this.setState(getAppState());
 	}
 
+	_onSearch (query) {
+		movieActions.search(query);
+	}
+
 	render () {
-
-		let view;
-		let movies = [];
-
-		if(!this.state.movies.length) {
-			view = (<div>No movies ...</div>);
-		}else {
-
-			for(let i = 0, iLen = this.state.movies.length; i < iLen; i ++) {
-				let movie = this.state.movies[i];
-				movies.push(<div key={i}>{movie.title}</div>);
-			}
-
-			view = (<div>{movies}</div>);
-		}
-
-		console.log(view)
-
-		return view;
+		return (
+			<div>
+			<SearchField onSubmit={this._onSearch} query={this.state.searchQuery}/>
+			<MovieList movies={this.state.movies} isLoading={this.state.isLoading}/>
+			</div>
+		);
 	}
 }
 
