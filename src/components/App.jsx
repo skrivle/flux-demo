@@ -38,12 +38,10 @@ class App extends React.Component {
 	}
 
 	_onSearch (query) {
-
 		movieActions.search(query, 1);
 	}
 
 	_onPagerClick (page) {
-		console.log(page)
 		movieActions.search(this.state.searchQuery, page);
 	}
 
