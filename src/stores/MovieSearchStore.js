@@ -23,7 +23,7 @@ function _setSearchQuery (value) {
 }
 
 function _emitChange () {
-	TodoStore.emit('change');
+	MovieSearchStore.emit('change');
 }
 
 function _setCurrentPage (page) {
@@ -70,9 +70,9 @@ appDispatcher.register(function (payload) {
 			break;
 
 		case 'RECIEVED_MOVIE_SEARCH_DATA':
-			_setMovies(payload.movies);
-			_setCurrentPage(payload.offset, payload.count, payload.totalResults);
-			_setTotalPages(payload.totalResults);
+			_setMovies(payload.data.movies);
+			_setCurrentPage(payload.data.offset, payload.data.count, payload.data.totalResults);
+			_setTotalPages(payload.data.totalResults);
 			_setIsLoading(false);
 			_emitChange();
 			break;
