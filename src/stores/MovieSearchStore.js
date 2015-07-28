@@ -35,7 +35,7 @@ function _setTotalPages (totalResults) {
 }
 
 
-let TodoStore = assign({}, EventEmitter.prototype, {
+let MovieSearchStore = assign({}, EventEmitter.prototype, {
 	getMovies: function () {
 		return _movies;
 	},
@@ -63,7 +63,7 @@ appDispatcher.register(function (payload) {
 
 	switch(payload.actionType) {
 
-		case 'LOADING_MOVIE_SEARCH_DATA':
+		case 'LOAD_MOVIE_SEARCH_DATA':
 			_setIsLoading(true);
 			_setSearchQuery(payload.data);
 			_emitChange();
@@ -80,4 +80,4 @@ appDispatcher.register(function (payload) {
 
 });
 
-export default TodoStore;
+export default MovieSearchStore;
