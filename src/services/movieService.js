@@ -38,20 +38,27 @@ const MOVIE_DATA = [
 ]
 
 
-export function search (query) {
+export function search (query, offset, count) {
 
-	var results = [];
+	let results = {
+		movies: [],
+		offset: offset,
+		count: count
+	};
+
+	let allMovies = [];
 
 	MOVIE_DATA.forEach(function (item) {
-
 		if(item.title.toLowerCase().indexOf(query) > -1) {
-			results.push(item);
+			allMovies.push(item);
 		}
 	});
+
+	results.totalResults = allMovies.length;
+	results.movies = allMovies.slice(offset, offset + count);
 
 	return new Promise ((resolve, reject) => {
 		setTimeout(() => { resolve(results) }, 3000);
 	});
-
 
 };

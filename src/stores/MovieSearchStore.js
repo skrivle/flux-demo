@@ -6,6 +6,9 @@ import assign from 'object-assign';
 let _movies = [];
 let _isLoading = false;
 let _searchQuery = '';
+let _currentPage;
+let _totalPages;
+let _resultsPerPage = 2;
 
 function _setMovies (movies) {
 	_movies = movies;
@@ -23,6 +26,14 @@ function _emitChange () {
 	TodoStore.emit('change');
 }
 
+function _setCurrentPage (page) {
+	_currentPage = page;
+}
+
+function _setTotalPages (totalResults) {
+	_totalPages = Math.ceil(totalResults / _resultsPerPage);
+}
+
 
 let TodoStore = assign({}, EventEmitter.prototype, {
 	getMovies: function () {
@@ -33,6 +44,18 @@ let TodoStore = assign({}, EventEmitter.prototype, {
 	},
 	getSearchQuery: function () {
 		return _searchQuery;
+	},
+	getCurrentPage: function () {
+		return _currentPage;
+	},
+	getTotalPages: function () {
+		return _totalPages;
+	},
+	getResultsPerPage: function () {
+		return _resultsPerPage;
+	},
+	getOffsetFromPage: function (page) {
+		return (page - 1) * _resultsPerPage;
 	}
 });
 
@@ -47,7 +70,9 @@ appDispatcher.register(function (payload) {
 			break;
 
 		case 'RECIEVED_MOVIE_SEARCH_DATA':
-			_setMovies(payload.data);
+			_setMovies(payload.movies);
+			_setCurrentPage(payload.offset, payload.count, payload.totalResults);
+			_setTotalPages(payload.totalResults);
 			_setIsLoading(false);
 			_emitChange();
 			break;
