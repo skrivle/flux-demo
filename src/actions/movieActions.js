@@ -5,15 +5,12 @@ import MovieSearchStore from '../stores/MovieSearchStore';
 export function search (query, page) {
 
 	appDispatcher.dispatch({
-		actionType: 'LOADING_MOVIE_SEARCH_DATA',
+		actionType: 'LOAD_MOVIE_SEARCH_DATA',
 		data: query
 	});
 
 	let count = MovieSearchStore.getResultsPerPage();
 	let offset = MovieSearchStore.getOffsetFromPage(page);
-
-	console.log('count', count)
-	console.log('offset', offset)
 
 	movieService.search(query, offset, count).then(function (data) {
 		appDispatcher.dispatch({
