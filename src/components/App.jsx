@@ -62,10 +62,9 @@ class App extends React.Component {
 					<Pager onPagerClick={this._onPagerClick} totalPages={this.state.totalPages} currentPage={this.state.currentPage}/>
 				</div>
 			)
+		}
 
-		return (
-			<view/>
-		);
+		return view;
 	}
 }
 
