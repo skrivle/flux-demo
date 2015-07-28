@@ -14,8 +14,6 @@ function getAppState () {
 		totalPages: MovieSearchStore.getTotalPages(),
 		currentPage: MovieSearchStore.getCurrentPage()
 	}
-
-	console.log(this.state);
 }
 
 class App extends React.Component {

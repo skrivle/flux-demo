@@ -20,9 +20,11 @@ export function search (query, page, bypassCache = false) {
 			data: query
 		});
 
-		movieService.search(query, offset, count).then(function (data) {
-			dispatchData(data);
-		});
+		movieService
+			.search(query, offset, count)
+			.then(function (data) {
+				dispatchData(data);
+			});
 	}
 
 	function dispatchData (data) {
