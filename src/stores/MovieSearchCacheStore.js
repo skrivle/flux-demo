@@ -28,7 +28,6 @@ appDispatcher.register(function (payload) {
 			let key = _getKey(payload.data.query, payload.data.offset, payload.data.count);
 			_setCacheItem(key, payload.data);
 
-			console.log(_cache);
 			break;
 	}
 
