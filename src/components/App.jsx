@@ -46,13 +46,29 @@ class App extends React.Component {
 	}
 
 	render () {
-		return (
-			<div>
-				<SearchField onSubmit={this._onSearch} query={this.state.searchQuery}/>
-				<MovieList movies={this.state.movies} isLoading={this.state.isLoading}/>
-				<Pager onPagerClick={this._onPagerClick} totalPages={this.state.totalPages} currentPage={this.state.currentPage}/>
-			</div>
-		);
+
+		let view;
+
+		if(this.state.isLoading) {
+			view = (
+				<div>
+					<span>Search for 'e' if you want lots of results ...</span>
+					<SearchField onSubmit={this._onSearch} query={this.state.searchQuery}/>
+					<MovieList movies={this.state.movies} isLoading={this.state.isLoading}/>
+				</div>
+			);
+		}else {
+			view = (
+				<div>
+					<span>Search for 'e' if you want lots of results ...</span>
+					<SearchField onSubmit={this._onSearch} query={this.state.searchQuery}/>
+					<MovieList movies={this.state.movies} isLoading={this.state.isLoading}/>
+					<Pager onPagerClick={this._onPagerClick} totalPages={this.state.totalPages} currentPage={this.state.currentPage}/>
+				</div>
+			)
+		}
+
+		return view;
 	}
 }
 

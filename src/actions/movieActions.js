@@ -9,8 +9,6 @@ export function search (query, page, bypassCache = false) {
 	let offset = MovieSearchStore.getOffsetFromPage(page);
 	let cachedData = MovieSearchCacheStore.getCacheItem(query, offset, count);
 
-	console.log(cachedData);
-
 	if(cachedData && !bypassCache) {
 
 		dispatchData(cachedData);
